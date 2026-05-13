@@ -1,7 +1,11 @@
 const routes = {
   "home": { title: "Home", file: "pages/home.html", crumb: ["Home"], init: initHome },
   "profile": { title: "Profile", file: "pages/profile.html", crumb: ["Profile"], init: initProfile },
-  "ceisa": { title: "CEISA Submission", file: "pages/ceisa.html", crumb: ["CEISA Submission"], init: null },
+  "ceisa": { title: "CEISA Submission", file: "pages/ceisa.html", crumb: ["CEISA Submission"], init: initCeisaList },
+  "ceisa/new": { title: "New Submission", file: "pages/ceisa-new.html", crumb: ["CEISA Submission", "New Submission"], init: initCeisaNew },
+  "ceisa/validation": { title: "Validation Result", file: "pages/ceisa-validation.html", crumb: ["CEISA Submission", "Validation Result"], init: initCeisaValidation },
+  "ceisa/result": { title: "Submission Result", file: "pages/ceisa-result.html", crumb: ["CEISA Submission", "Submission Result"], init: initCeisaResult },
+  "ceisa/detail": { title: "Submission Detail", file: "pages/ceisa-detail.html", crumb: ["CEISA Submission", "Submission Detail"], init: initCeisaDetail },
   "reports/pemasukan-barang": { title: "Pemasukan Barang", file: "pages/reports/pemasukan-barang.html", crumb: ["Report", "Pemasukan Barang"], init: () => initReport("pemasukanBarang") },
   "reports/pengeluaran-barang": { title: "Pengeluaran Barang", file: "pages/reports/pengeluaran-barang.html", crumb: ["Report", "Pengeluaran Barang"], init: () => initReport("pengeluaranBarang") },
   "reports/mutasi-bahan-baku": { title: "Mutasi Barang Bahan Baku", file: "pages/reports/mutasi-bahan-baku.html", crumb: ["Report", "Mutasi Barang Bahan Baku"], init: () => initReport("mutasiBahanBaku") },
@@ -44,7 +48,8 @@ async function loadRoute() {
 
 function setActiveNav(key) {
   document.querySelectorAll(".sidebar .nav-link").forEach((link) => {
-    link.classList.toggle("active", link.dataset.route === key);
+    const route = link.dataset.route;
+    link.classList.toggle("active", route === key || (route === "ceisa" && key.startsWith("ceisa/")));
   });
 }
 
@@ -112,6 +117,173 @@ function initReport(reportKey) {
       }
     });
   });
+}
+
+function initDataTable(tableId, rows, options = {}) {
+  return $(`#${tableId}`).DataTable({
+    data: rows,
+    scrollX: true,
+    pageLength: options.pageLength || 10,
+    lengthMenu: [5, 10, 25, 50],
+    order: [],
+    language: {
+      emptyTable: "No data available for selected filter.",
+      search: "Search:",
+      lengthMenu: "Show _MENU_ entries",
+      info: "Showing _START_ to _END_ of _TOTAL_ entries"
+    },
+    columnDefs: [{ targets: "_all", className: "align-middle" }]
+  });
+}
+
+function initCeisaList() {
+  const rows = AppData.ceisa.submissions.map((item, index) => [
+    index + 1,
+    item.noAju,
+    item.bcType,
+    item.documentType,
+    item.sapDocNum,
+    item.businessPartner,
+    item.nomorDaftar || "-",
+    item.tanggalDaftar || "-",
+    ceisaStatusBadge(item.statusCode, item.statusName),
+    item.remarks,
+    item.lastSync,
+    ceisaListActions(item)
+  ]);
+  initDataTable("ceisaSubmissionTable", rows);
+  initTooltips();
+}
+
+function initCeisaNew() {
+  const rows = AppData.ceisa.eligibleDocuments.map((item, index) => [
+    `<input class="form-check-input ceisa-doc-check" type="checkbox" value="${index}" ${index < 3 ? "checked" : ""}>`,
+    item.documentType,
+    item.docNo,
+    item.postingDate,
+    item.businessPartner,
+    item.totalQty,
+    item.totalAmount,
+    item.currency,
+    item.remarks,
+    `<button class="btn btn-sm btn-outline-primary" onclick="showSapDocumentDetail(${index})"><i class="fa-solid fa-eye me-1"></i>View Detail Document</button>`
+  ]);
+  initDataTable("eligibleSapTable", rows);
+  document.getElementById("validateSelectedBtn").addEventListener("click", () => {
+    const checked = document.querySelectorAll(".ceisa-doc-check:checked").length;
+    if (!checked) {
+      alert("Please select at least one SAP document.");
+      return;
+    }
+    location.hash = "#/ceisa/validation";
+  });
+}
+
+function initCeisaValidation() {
+  const docs = AppData.ceisa.eligibleDocuments;
+  const successDocs = docs.filter((item) => item.valid);
+  const errorDocs = docs.filter((item) => !item.valid);
+  document.getElementById("totalSelected").textContent = docs.length;
+  document.getElementById("validationSuccess").textContent = successDocs.length;
+  document.getElementById("validationError").textContent = errorDocs.length;
+  const successTable = initDataTable("validationSuccessTable", successDocs.map((item, index) => [
+    index + 1,
+    item.documentType,
+    item.docNo,
+    item.businessPartner,
+    "JSON Schema Valid",
+    "Ready to submit"
+  ]), { pageLength: 5 });
+  const errorTable = initDataTable("validationErrorTable", errorDocs.map((item, index) => [
+    index + 1,
+    item.documentType,
+    item.docNo,
+    item.businessPartner,
+    item.error || "Missing mandatory field",
+    item.remarks
+  ]), { pageLength: 5 });
+  document.querySelectorAll('[data-bs-toggle="tab"]').forEach((tab) => {
+    tab.addEventListener("shown.bs.tab", () => {
+      successTable.columns.adjust();
+      errorTable.columns.adjust();
+    });
+  });
+}
+
+function initCeisaResult() {
+  const successDocs = AppData.ceisa.eligibleDocuments.filter((item) => item.valid);
+  document.getElementById("totalValidDocs").textContent = successDocs.length;
+  document.getElementById("successSubmitted").textContent = successDocs.length;
+  document.getElementById("failedSubmitted").textContent = "0";
+  initDataTable("submissionResultTable", successDocs.map((item, index) => [
+    index + 1,
+    item.documentType,
+    item.docNo,
+    item.businessPartner,
+    `AJU-DUMMY-${String(index + 1).padStart(4, "0")}`,
+    `<span class="badge text-bg-success">Success</span>`,
+    "Submitted to CEISA successfully"
+  ]), { pageLength: 5 });
+}
+
+function initCeisaDetail() {
+  const item = AppData.ceisa.submissions[0];
+  document.querySelectorAll("[data-ceisa-field]").forEach((field) => {
+    const key = field.dataset.ceisaField;
+    field.innerHTML = key === "status"
+      ? ceisaStatusBadge(item.statusCode, item.statusName)
+      : (item[key] || "-");
+  });
+  const source = AppData.ceisa.eligibleDocuments[0];
+  document.querySelectorAll("[data-source-field]").forEach((field) => {
+    field.textContent = source[field.dataset.sourceField] || "-";
+  });
+  document.getElementById("ceisaItemDetailRows").innerHTML = AppData.ceisa.sapItems.map((row) => (
+    `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td><td>${row[3]}</td><td>${row[5]}</td><td>${row[6]}</td></tr>`
+  )).join("");
+}
+
+function ceisaStatusBadge(code, name) {
+  return `<span class="status-badge status-${code}">[${code}] ${name}</span>`;
+}
+
+function ceisaListActions(item) {
+  const canDownload = item.pdfAvailable && (item.nomorDaftar || item.statusCode === "800");
+  const download = canDownload
+    ? `<button class="btn btn-sm btn-outline-secondary" onclick="alert('Dummy CEISA PDF download.')"><i class="fa-solid fa-file-pdf me-1"></i>Download CEISA PDF</button>`
+    : `<button class="btn btn-sm btn-outline-secondary" disabled data-bs-toggle="tooltip" data-bs-title="PDF belum tersedia dari CEISA"><i class="fa-solid fa-file-pdf me-1"></i>Download CEISA PDF</button>`;
+  return `<div class="d-flex gap-2"><a class="btn btn-sm btn-outline-primary" href="#/ceisa/detail"><i class="fa-solid fa-eye me-1"></i>View</a>${download}</div>`;
+}
+
+function initTooltips() {
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((element) => {
+    bootstrap.Tooltip.getOrCreateInstance(element);
+  });
+}
+
+function showSapDocumentDetail(index) {
+  const doc = AppData.ceisa.eligibleDocuments[index];
+  const itemRows = AppData.ceisa.sapItems.map((row) => (
+    `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`
+  )).join("");
+  showModal("SAP Document Detail", `
+    <div class="detail-grid mb-3">
+      <div class="detail-field"><span>Document Type</span><strong>${doc.documentType}</strong></div>
+      <div class="detail-field"><span>Doc No</span><strong>${doc.docNo}</strong></div>
+      <div class="detail-field"><span>Posting Date</span><strong>${doc.postingDate}</strong></div>
+      <div class="detail-field"><span>Business Partner</span><strong>${doc.businessPartner}</strong></div>
+      <div class="detail-field"><span>Warehouse</span><strong>${doc.warehouse}</strong></div>
+      <div class="detail-field"><span>Currency</span><strong>${doc.currency}</strong></div>
+      <div class="detail-field"><span>Total Amount</span><strong>${doc.totalAmount}</strong></div>
+    </div>
+    <div class="card-title-line"><h3>Item Lines</h3></div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm compact-table">
+        <thead><tr><th>Item Code</th><th>Item Name</th><th>Quantity</th><th>UoM</th><th>Unit Price</th><th>Line Total</th><th>Remarks</th></tr></thead>
+        <tbody>${itemRows}</tbody>
+      </table>
+    </div>
+  `);
 }
 
 function decorateRows(reportKey, rows) {

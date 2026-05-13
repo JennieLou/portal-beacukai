@@ -1,0 +1,32 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">New Submission</h1>
+    <p class="page-subtitle">Search eligible SAP documents, select rows, then validate before submit.</p>
+  </div>
+  <span class="badge-soft"><i class="fa-solid fa-shield-halved"></i>UI Mockup Only</span>
+</section>
+
+<form class="filter-card">
+  <div class="card-title-line"><h2>Search SAP Document</h2></div>
+  <div class="row g-3 align-items-end">
+    <div class="col-md-2"><label class="form-label">BC Type</label><select class="form-select"><option>BC 2.3</option><option>BC 2.5</option><option>BC 2.7</option><option>BC 4.1</option></select></div>
+    <div class="col-md-2"><label class="form-label">Document Type</label><select class="form-select"><option>All</option><option>Goods Receipt PO</option><option>Delivery</option><option>Inventory Transfer</option></select></div>
+    <div class="col-md-2"><label class="form-label">Date From</label><input class="form-control" type="date" value="2026-05-01"></div>
+    <div class="col-md-2"><label class="form-label">Date To</label><input class="form-control" type="date" value="2026-05-31"></div>
+    <div class="col-md-2"><label class="form-label">Warehouse</label><select class="form-select"><option>All Assigned</option><option>JP-FG002</option><option>JP-MT002</option><option>JP-SF002</option><option>JP-WP002</option></select></div>
+    <div class="col-md-2"><label class="form-label">Business Partner</label><input class="form-control" type="text" placeholder="Partner name"></div>
+    <div class="col-12"><button class="btn btn-primary me-2" type="button"><i class="fa-solid fa-magnifying-glass me-1"></i>Search</button><button class="btn btn-outline-secondary" type="reset">Reset</button></div>
+  </div>
+</form>
+
+<section class="table-card">
+  <div class="toolbar-split mb-3">
+    <div class="step-note mb-0">Validation status is intentionally not shown here. Select SAP documents first, then validate selected rows.</div>
+    <div><button class="btn btn-primary" id="validateSelectedBtn" type="button"><i class="fa-solid fa-check-double me-1"></i>Validate Selected</button><a class="btn btn-outline-secondary ms-2" href="#/ceisa">Back</a></div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" id="eligibleSapTable">
+      <thead><tr><th>Select</th><th>Document Type</th><th>Doc No</th><th>Posting Date</th><th>Business Partner</th><th>Total Qty</th><th>Total Amount</th><th>Currency</th><th>Remarks</th><th>Action</th></tr></thead>
+    </table>
+  </div>
+</section>

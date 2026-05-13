@@ -75,3 +75,95 @@ const AppData = {
     ]
   }
 };
+
+AppData.ceisa = {
+  submissions: [
+    {
+      noAju: "AJU-CEISA-260501",
+      bcType: "BC 2.3",
+      documentType: "Goods Receipt PO",
+      sapDocNum: "GRPO-260501",
+      businessPartner: "PT Sumber Material Nusantara",
+      nomorDaftar: "000123/BC/2026",
+      tanggalDaftar: "2026-05-01",
+      statusCode: "800",
+      statusName: "Selesai Proses",
+      remarks: "Data barang impor sudah selesai proses",
+      lastSync: "2026-05-13 08:45:00",
+      pdfAvailable: true
+    },
+    {
+      noAju: "AJU-CEISA-260506",
+      bcType: "BC 4.1",
+      documentType: "Delivery",
+      sapDocNum: "DLV-260566",
+      businessPartner: "PT Retail Sandang Indonesia",
+      nomorDaftar: "001210/BC/2026",
+      tanggalDaftar: "2026-05-06",
+      statusCode: "240",
+      statusName: "Penjaluran",
+      remarks: "Menunggu penjaluran CEISA",
+      lastSync: "2026-05-13 08:30:00",
+      pdfAvailable: true
+    },
+    {
+      noAju: "AJU-CEISA-260509",
+      bcType: "BC 2.7",
+      documentType: "Inventory Transfer",
+      sapDocNum: "TRF-260591",
+      businessPartner: "Kawasan Berikat Mitra",
+      nomorDaftar: "",
+      tanggalDaftar: "",
+      statusCode: "120",
+      statusName: "Reject",
+      remarks: "Invalid NPWP pada data penerima",
+      lastSync: "2026-05-13 08:15:00",
+      pdfAvailable: false
+    },
+    {
+      noAju: "AJU-CEISA-260510",
+      bcType: "BC 2.5",
+      documentType: "Delivery",
+      sapDocNum: "DLV-260610",
+      businessPartner: "Global Apparel Pte Ltd",
+      nomorDaftar: "",
+      tanggalDaftar: "",
+      statusCode: "110",
+      statusName: "Validasi",
+      remarks: "Dalam proses validasi CEISA",
+      lastSync: "2026-05-13 08:00:00",
+      pdfAvailable: false
+    }
+  ],
+  eligibleDocuments: [
+    { documentType: "Goods Receipt PO", docNo: "GRPO-260701", postingDate: "2026-05-10", businessPartner: "PT Benang Prima Textile", warehouse: "JP-MT002", totalQty: "2,400", totalAmount: "124,500,000", currency: "IDR", remarks: "Penerimaan bahan baku lokal", valid: true },
+    { documentType: "Goods Receipt PO", docNo: "GRPO-260702", postingDate: "2026-05-11", businessPartner: "PT Kimia Tekstil Jaya", warehouse: "JP-MT002", totalQty: "520", totalAmount: "68,250,000", currency: "IDR", remarks: "HS Code belum lengkap", valid: false, error: "Missing HS Code" },
+    { documentType: "Delivery", docNo: "DLV-260711", postingDate: "2026-05-11", businessPartner: "PT Retail Sandang Indonesia", warehouse: "JP-FG002", totalQty: "360", totalAmount: "97,200,000", currency: "IDR", remarks: "Pengeluaran barang jadi", valid: true },
+    { documentType: "Delivery", docNo: "DLV-260712", postingDate: "2026-05-12", businessPartner: "CV Nusantara Distribusi", warehouse: "JP-FG002", totalQty: "180", totalAmount: "49,500,000", currency: "IDR", remarks: "NPWP penerima tidak valid", valid: false, error: "Invalid NPWP" },
+    { documentType: "Inventory Transfer", docNo: "TRF-260715", postingDate: "2026-05-12", businessPartner: "Kawasan Berikat Mitra", warehouse: "JP-SF002", totalQty: "700", totalAmount: "31,500,000", currency: "IDR", remarks: "Mapping dokumen belum sesuai", valid: false, error: "Invalid document mapping" }
+  ],
+  sapItems: [
+    ["RM-YARN-010", "Cotton Yarn 30s", "1,600", "KG", "42,500", "68,000,000", "Material utama"],
+    ["RM-FAB-002", "Lining Fabric", "800", "MTR", "70,625", "56,500,000", "Material pendukung"]
+  ],
+  timeline: [
+    ["2026-05-01 09:15:00", "100", "Penerimaan Data", "Data diterima oleh CEISA"],
+    ["2026-05-01 09:22:00", "110", "Validasi", "Validasi struktur dan referensi"],
+    ["2026-05-01 10:05:00", "240", "Penjaluran", "Penetapan jalur dokumen"],
+    ["2026-05-01 11:40:00", "800", "Selesai Proses", "Dokumen selesai diproses"]
+  ],
+  requestPayload: {
+    aju: "AJU-CEISA-260501",
+    bcType: "BC 2.3",
+    sourceSystem: "SAP Business One",
+    document: { docNum: "GRPO-260501", currency: "USD", warehouse: "JP-MT002" },
+    items: [{ itemCode: "RM-FAB-001", quantity: 1250, uom: "MTR" }]
+  },
+  responseLog: {
+    status: "success",
+    code: "800",
+    message: "Selesai Proses",
+    nomorDaftar: "000123/BC/2026",
+    syncedAt: "2026-05-13 08:45:00"
+  }
+};

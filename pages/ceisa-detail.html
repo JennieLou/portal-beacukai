@@ -1,0 +1,47 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">Submission Detail</h1>
+    <p class="page-subtitle">Submitted CEISA document detail and sync log.</p>
+  </div>
+  <div><a class="btn btn-outline-secondary" href="#/ceisa">Back</a><button class="btn btn-danger ms-2" onclick="alert('Dummy CEISA PDF download.')"><i class="fa-solid fa-file-pdf me-1"></i>Download CEISA PDF</button></div>
+</section>
+
+<section class="content-card mb-3">
+  <div class="card-title-line"><h2>Header Information</h2></div>
+  <div class="detail-grid">
+    <div class="detail-field"><span>No AJU</span><strong data-ceisa-field="noAju"></strong></div>
+    <div class="detail-field"><span>BC Type</span><strong data-ceisa-field="bcType"></strong></div>
+    <div class="detail-field"><span>Document Type</span><strong data-ceisa-field="documentType"></strong></div>
+    <div class="detail-field"><span>SAP DocNum</span><strong data-ceisa-field="sapDocNum"></strong></div>
+    <div class="detail-field"><span>Business Partner</span><strong data-ceisa-field="businessPartner"></strong></div>
+    <div class="detail-field"><span>Nomor Daftar</span><strong data-ceisa-field="nomorDaftar"></strong></div>
+    <div class="detail-field"><span>Tanggal Daftar</span><strong data-ceisa-field="tanggalDaftar"></strong></div>
+    <div class="detail-field"><span>Status CEISA</span><strong data-ceisa-field="status"></strong></div>
+    <div class="detail-field"><span>Remarks</span><strong data-ceisa-field="remarks"></strong></div>
+    <div class="detail-field"><span>Last Sync</span><strong data-ceisa-field="lastSync"></strong></div>
+  </div>
+</section>
+
+<section class="content-card mb-3">
+  <div class="card-title-line"><h2>Source SAP Document</h2></div>
+  <div class="detail-grid">
+    <div class="detail-field"><span>Document Type</span><strong data-source-field="documentType"></strong></div>
+    <div class="detail-field"><span>SAP DocNum</span><strong data-source-field="docNo"></strong></div>
+    <div class="detail-field"><span>Posting Date</span><strong data-source-field="postingDate"></strong></div>
+    <div class="detail-field"><span>Business Partner</span><strong data-source-field="businessPartner"></strong></div>
+    <div class="detail-field"><span>Warehouse</span><strong data-source-field="warehouse"></strong></div>
+    <div class="detail-field"><span>Total Qty</span><strong data-source-field="totalQty"></strong></div>
+    <div class="detail-field"><span>Total Amount</span><strong data-source-field="totalAmount"></strong></div>
+    <div class="detail-field"><span>Currency</span><strong data-source-field="currency"></strong></div>
+  </div>
+</section>
+
+<section class="table-card mb-3">
+  <div class="card-title-line"><h2>Item Detail</h2></div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover compact-table">
+      <thead><tr><th>Item Code</th><th>Item Name</th><th>Quantity</th><th>UoM</th><th>Amount</th><th>Remarks</th></tr></thead>
+      <tbody id="ceisaItemDetailRows"></tbody>
+    </table>
+  </div>
+</section>

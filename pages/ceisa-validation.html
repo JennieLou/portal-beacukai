@@ -1,0 +1,28 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">Validation Result</h1>
+    <p class="page-subtitle">Only successful validation rows can be submitted to CEISA.</p>
+  </div>
+</section>
+
+<section class="summary-grid">
+  <div class="summary-card"><span>Total Selected</span><strong id="totalSelected">0</strong></div>
+  <div class="summary-card"><span>Validation Success</span><strong id="validationSuccess">0</strong></div>
+  <div class="summary-card"><span>Validation Error</span><strong id="validationError">0</strong></div>
+</section>
+
+<section class="table-card">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#successTab" type="button">Validation Success</button></li>
+    <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#errorTab" type="button">Validation Error</button></li>
+  </ul>
+  <div class="tab-content pt-3">
+    <div class="tab-pane fade show active" id="successTab">
+      <div class="table-responsive"><table class="table table-bordered table-hover" id="validationSuccessTable"><thead><tr><th>No</th><th>Document Type</th><th>Doc No</th><th>Business Partner</th><th>Validation Result</th><th>Remarks</th></tr></thead></table></div>
+    </div>
+    <div class="tab-pane fade" id="errorTab">
+      <div class="table-responsive"><table class="table table-bordered table-hover" id="validationErrorTable"><thead><tr><th>No</th><th>Document Type</th><th>Doc No</th><th>Business Partner</th><th>Error Message</th><th>Remarks</th></tr></thead></table></div>
+    </div>
+  </div>
+  <div class="action-toolbar mt-3"><a class="btn btn-outline-secondary" href="#/ceisa/new">Back</a><a class="btn btn-primary" href="#/ceisa/result"><i class="fa-solid fa-paper-plane me-1"></i>Submit Valid Documents</a></div>
+</section>

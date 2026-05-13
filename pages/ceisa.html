@@ -1,13 +1,29 @@
 <section class="page-header">
   <div>
     <h1 class="page-title">CEISA Submission</h1>
-    <p class="page-subtitle">Placeholder module.</p>
+    <p class="page-subtitle">Submitted document monitoring. SAP Business One remains the source of truth.</p>
   </div>
-  <span class="badge-soft"><i class="fa-solid fa-ban"></i>No Submit Access</span>
+  <a class="btn btn-primary" href="#/ceisa/new"><i class="fa-solid fa-plus me-2"></i>New Submission</a>
 </section>
 
-<section class="content-card empty-state">
-  <i class="fa-solid fa-cloud-arrow-up fa-3x mb-3 text-primary"></i>
-  <h2>CEISA Submission</h2>
-  <p>CEISA Submission module will be discussed and developed in the next phase.</p>
+<form class="filter-card">
+  <div class="card-title-line"><h2>Filter</h2><span class="badge-soft"><i class="fa-solid fa-rotate"></i>Backend scheduler sync every 15 minutes</span></div>
+  <div class="row g-3 align-items-end">
+    <div class="col-md-2"><label class="form-label">Date From</label><input class="form-control" type="date" value="2026-05-01"></div>
+    <div class="col-md-2"><label class="form-label">Date To</label><input class="form-control" type="date" value="2026-05-31"></div>
+    <div class="col-md-2"><label class="form-label">BC Type</label><select class="form-select"><option>All</option><option>BC 2.3</option><option>BC 2.5</option><option>BC 2.7</option><option>BC 4.1</option></select></div>
+    <div class="col-md-2"><label class="form-label">Document Type</label><select class="form-select"><option>All</option><option>Goods Receipt PO</option><option>Delivery</option><option>Inventory Transfer</option></select></div>
+    <div class="col-md-2"><label class="form-label">Status CEISA</label><select class="form-select"><option>All</option><option>[100] Penerimaan Data</option><option>[110] Validasi</option><option>[120] Reject</option><option>[240] Penjaluran</option><option>[800] Selesai Proses</option><option>[900] Pembatalan</option></select></div>
+    <div class="col-md-2"><label class="form-label">Business Partner</label><input class="form-control" type="text" placeholder="Partner name"></div>
+    <div class="col-12"><button class="btn btn-primary me-2" type="button"><i class="fa-solid fa-filter me-1"></i>Filter</button><button class="btn btn-outline-secondary" type="reset">Reset</button></div>
+  </div>
+</form>
+
+<section class="table-card">
+  <div class="step-note">This list only shows documents already submitted to CEISA. Unsubmitted SAP documents are searched from New Submission.</div>
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" id="ceisaSubmissionTable">
+      <thead><tr><th>No</th><th>No AJU</th><th>BC Type</th><th>Document Type</th><th>SAP DocNum</th><th>Business Partner</th><th>Nomor Daftar</th><th>Tanggal Daftar</th><th>Status CEISA</th><th>Remarks</th><th>Last Sync</th><th>Action</th></tr></thead>
+    </table>
+  </div>
 </section>
