@@ -1,0 +1,38 @@
+<section class="page-header">
+  <div>
+    <h1 class="page-title">View Profile</h1>
+    <p class="page-subtitle">User authorization and warehouse assignment simulation.</p>
+  </div>
+  <span class="badge-soft"><i class="fa-solid fa-eye"></i>View / Export Only</span>
+</section>
+
+<div class="profile-grid">
+  <section class="content-card">
+    <div class="card-title-line"><h2>User Profile</h2></div>
+    <form id="changePasswordForm">
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">Employee ID</label><input class="form-control" data-profile="employeeId" readonly></div>
+        <div class="col-md-6"><label class="form-label">Employee Code</label><input class="form-control" data-profile="employeeCode" readonly></div>
+        <div class="col-md-6"><label class="form-label">First Name</label><input class="form-control" data-profile="firstName" readonly></div>
+        <div class="col-md-6"><label class="form-label">Last Name</label><input class="form-control" data-profile="lastName" readonly></div>
+        <div class="col-12"><label class="form-label">Username</label><input class="form-control" data-profile="username" readonly></div>
+        <div class="col-12"><label class="form-label">Old Password</label><input class="form-control" type="password" id="oldPassword"></div>
+        <div class="col-md-6"><label class="form-label">New Password</label><input class="form-control" type="password" id="newPassword"></div>
+        <div class="col-md-6"><label class="form-label">Confirm New Password</label><input class="form-control" type="password" id="confirmPassword"></div>
+      </div>
+      <button class="btn btn-primary mt-3" type="submit"><i class="fa-solid fa-key me-2"></i>Change Password</button>
+      <div class="alert d-none" id="passwordMessage"></div>
+    </form>
+  </section>
+
+  <div class="d-grid gap-3">
+    <section class="content-card">
+      <div class="card-title-line"><h2>Authorization List</h2></div>
+      <ul class="auth-list" id="authorizationList"></ul>
+    </section>
+    <section class="content-card">
+      <div class="card-title-line"><h2>Warehouse Assignment List</h2></div>
+      <ul class="warehouse-list" id="warehouseList"></ul>
+    </section>
+  </div>
+</div>

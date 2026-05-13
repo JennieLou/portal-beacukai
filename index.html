@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Web Portal Bea Cukai</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.bootstrap5.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">BC</div>
+        <div>
+          <strong>Bea Cukai</strong>
+          <span>Web Portal</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-link" href="#/home" data-route="home"><i class="fa-solid fa-house"></i><span>Home</span></a>
+        <a class="nav-link" href="#/profile" data-route="profile"><i class="fa-solid fa-user-shield"></i><span>Profile</span></a>
+        <a class="nav-link disabled-link" href="#/ceisa" data-route="ceisa"><i class="fa-solid fa-cloud-arrow-up"></i><span>CEISA Submission</span><small>Coming soon</small></a>
+        <button class="nav-group-toggle" type="button" data-bs-toggle="collapse" data-bs-target="#reportMenu" aria-expanded="true">
+          <span><i class="fa-solid fa-chart-column"></i> Report</span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="collapse show nav-submenu" id="reportMenu">
+          <a class="nav-link" href="#/reports/pemasukan-barang" data-route="reports/pemasukan-barang">Pemasukan Barang</a>
+          <a class="nav-link" href="#/reports/pengeluaran-barang" data-route="reports/pengeluaran-barang">Pengeluaran Barang</a>
+          <a class="nav-link" href="#/reports/mutasi-bahan-baku" data-route="reports/mutasi-bahan-baku">Mutasi Barang Bahan Baku</a>
+          <a class="nav-link" href="#/reports/mutasi-barang-jadi" data-route="reports/mutasi-barang-jadi">Mutasi Barang Jadi</a>
+          <a class="nav-link" href="#/reports/mutasi-scrap" data-route="reports/mutasi-scrap">Mutasi Scrap</a>
+          <a class="nav-link" href="#/reports/posisi-wip" data-route="reports/posisi-wip">Posisi WIP</a>
+          <a class="nav-link" href="#/reports/mutasi-barang-modal" data-route="reports/mutasi-barang-modal">Mutasi Barang Modal dan Barang Lain</a>
+          <a class="nav-link" href="#/reports/log-history-user" data-route="reports/log-history-user">Log History User</a>
+        </div>
+        <a class="nav-link logout-link" href="login.html"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a>
+      </nav>
+    </aside>
+
+    <div class="app-main">
+      <header class="topbar">
+        <button class="btn btn-icon d-lg-none" id="sidebarToggle" type="button" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+        <div class="topbar-title">
+          <span class="system-label">SAP Business One Extension</span>
+          <strong>Web Portal Bea Cukai</strong>
+        </div>
+        <div class="user-pill">
+          <i class="fa-solid fa-circle-user"></i>
+          <div>
+            <strong>BC-USER-01</strong>
+            <span>View / Export Access</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb" id="breadcrumb"></ol>
+        </nav>
+        <div id="page-content" class="page-content">
+          <div class="loading-panel">
+            <div class="spinner-border text-primary" role="status"></div>
+            <span>Loading page...</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal fade" id="appModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="appModalTitle">Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="appModalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.bootstrap5.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.js"></script>
+  <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.js"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
