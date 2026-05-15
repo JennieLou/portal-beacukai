@@ -158,6 +158,7 @@ function initCeisaList() {
 function initCeisaNew() {
   const rows = AppData.ceisa.eligibleDocuments.map((item, index) => [
     `<input class="form-check-input ceisa-doc-check" type="checkbox" value="${index}" ${index < 3 ? "checked" : ""}>`,
+    item.bcType,
     item.documentType,
     item.docNo,
     item.postingDate,
